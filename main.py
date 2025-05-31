@@ -65,7 +65,7 @@ def convert_mihon_manga_to_sy(mihon_manga):
     sy_manga.thumbnailUrl = getattr(mihon_manga, "thumbnailUrl", "")
     sy_manga.dateAdded = getattr(mihon_manga, "dateAdded", 0)
     sy_manga.viewer = getattr(mihon_manga, "viewer", 0)
-    sy_manga.favorite = getattr(mihon_manga, "favorite", False)
+    sy_manga.favorite = True
     sy_manga.chapterFlags = getattr(mihon_manga, "chapterFlags", 0)
     sy_manga.viewer_flags = getattr(mihon_manga, "viewer_flags", 0)
 
