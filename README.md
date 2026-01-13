@@ -1,26 +1,30 @@
-# Tachiyomi Backup Tool
+# Manga Backup Converter Tool
 
-A Python utility for managing and merging Tachiyomi backup files across different forks (SY, Mihon, etc.).
+A powerful Python CLI utility for managing, merging, and analyzing manga backups from **TachiyomiSY**, **Mihon**, **Neko**, and **J2K**.
 
 ## Features
 
-- 🔄 Merge backups from different Tachiyomi forks
-- 📊 Analyze backup contents with detailed statistics
-- 🔍 Inspect manga, chapters, and source information
-- 💾 Support for multiple backup formats (SY, Mihon)
+- **🔄 Smart Merging**: Combine multiple backups into one.
+    - **Intelligent Deduplication**: Uses `Source ID` + `Manga URL` to identify duplicates. This correctly handles cases where titles differ (e.g., "One Piece" vs "Wan Pisu") or where users renamed valid entries.
+- **� Detailed Analysis**: Inspect your library with the `info` command, listing all sources, categories, and statistics.
+- **💾 Cross-Compatibility**: Support for multiple backup formats (SY, Mihon, Neko, J2K) using standard Protobuf definitions.
+- **🔄 Format Conversion**: Convert backups between formats (e.g., Neko -> SY).
 
 ## Installation
 
 1. Clone the repository:
 ```bash
-git clone https://github.com/yourusername/tachiyomi-backup-tool.git
-cd tachiyomi-backup-tool
+git clone https://github.com/Apex-94/manga_app_ports_backup_converter.git
+cd manga_app_ports_backup_converter
 ```
 
 2. Create and activate a virtual environment:
 ```bash
-python -m venv env
-source env/bin/activate  # On Windows: env\Scripts\activate
+python -m venv venv
+# Windows
+.\venv\Scripts\activate
+# Linux/Mac
+source venv/bin/activate
 ```
 
 3. Install dependencies:
@@ -30,52 +34,49 @@ pip install -r requirements.txt
 
 ## Usage
 
-The tool provides two main commands:
+### 1. View Info & Stats
+Get a detailed breakdown of your library, including manga counts, categories, and a list of **all sources used**.
 
-### 1. Merge Backups
-
-Merge a Mihon backup into a SY backup:
-```bash
-python main.py merge <sy_backup.tachibk> <mihon_backup.tachibk> <output.tachibk>
+```powershell
+python -m backup_converter.cli info <path_to_backup>
 ```
 
-### 2. Parse Backup
+**Example Output:**
+```text
+File: output.tachibk
+Detected Format: SY
 
-Analyze and display statistics for a backup file:
-```bash
-python main.py parse --input <backup.tachibk>
+=== 📚 General Stats ===
+Total Manga       : 2456
+Categories        : 7
+Sources Used      : 5
+
+=== 🔗 Sources Used ===
+  - MangaDex             : 1200 manga
+  - MangaSee             : 800 manga
+  - ...
 ```
 
-The parse command provides:
-- Total manga count
-- Number of categories and sources
-- Favorite manga count
-- Chapter statistics
-- Top sources by manga count
-- Popular authors and genres
+### 2. Merge Backups
+Merge multiple backups into one `SY-compatible` backup. 
+The tool uses a **smart deduplication** strategy: if a manga exists in multiple backups (same Source + URL), it prioritizes the version marked as "Favorite".
 
-## Example Output
-
+```powershell
+python -m backup_converter.cli merge backup1.tachibk backup2.tachibk -o merged.tachibk
 ```
-=== Parsed Backup Summary ===
-📚 Manga entries   : 2310
-📂 Categories      : 5
-🌐 Sources         : 15
-⚙️ Preferences     : 20
-❤️ Favorites       : 150
-🗃️ Non-Favorites   : 2160
-📖 Chapters/Manga  : min=1, max=500, avg=45.23
+
+### 3. Convert Formats
+Convert a backup to a different format (e.g., migrate from Neko to standard SY/Mihon).
+
+```powershell
+python -m backup_converter.cli convert input.tachibk sy -o output.tachibk
 ```
 
 ## Supported Formats
-
-- TachiyomiSY (.tachibk)
-- Mihon (.tachibk)
-
-## Contributing
-
-Contributions are welcome! Please feel free to submit a Pull Request.
+- **TachiyomiSY**
+- **Mihon**
+- **Neko**
+- **TachiyomiJ2K**
 
 ## License
-
-This project is licensed under the MIT License - see the LICENSE file for details. 
+MIT License
