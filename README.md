@@ -5,7 +5,7 @@ A powerful Python CLI utility for managing, merging, and analyzing manga backups
 ## Features
 
 - **🔄 Smart Merging**: Combine multiple backups into one.
-    - **Intelligent Deduplication**: Uses `Source ID` + `Manga URL` to identify duplicates. This correctly handles cases where titles differ (e.g., "One Piece" vs "Wan Pisu") or where users renamed valid entries.
+    - **Intelligent Deduplication**: Uses `Source ID` + `Manga URL` to identify duplicates. This correctly handles cases where titles differ or where users renamed valid entries.
 - **� Detailed Analysis**: Inspect your library with the `info` command, listing all sources, categories, and statistics.
 - **💾 Cross-Compatibility**: Support for multiple backup formats (SY, Mihon, Neko, J2K) using standard Protobuf definitions.
 - **🔄 Format Conversion**: Convert backups between formats (e.g., Neko -> SY).
