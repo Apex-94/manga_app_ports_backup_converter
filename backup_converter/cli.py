@@ -15,7 +15,7 @@ def setup_logging():
 def main():
     setup_logging()
     
-    # Force UTF-8 for emoji support on Windows terminals
+    # Force UTF-8 for support on Windows terminals
     if sys.stdout.encoding != 'utf-8':
         try:
             sys.stdout.reconfigure(encoding='utf-8')
@@ -52,7 +52,7 @@ def main():
         print(f"Detected Format: {fmt.name}")
         
         # General Stats
-        print(f"\n=== 📚 General Stats ===")
+        print(f"\n=== General Stats ===")
         print(f"Total Manga       : {len(mangas)}")
         categories = getattr(backup, 'backupCategories', [])
         print(f"Categories        : {len(categories)}")
@@ -63,7 +63,7 @@ def main():
 
         # Library Stats
         fav_count = sum(1 for m in mangas if getattr(m, 'favorite', False))
-        print(f"\n=== 🗃️  Library ===")
+        print(f"\n=== Library ===")
         print(f"Favorites         : {fav_count}")
         print(f"Non-Favorites     : {len(mangas) - fav_count}")
         
@@ -71,7 +71,7 @@ def main():
         all_chapters = [len(m.chapters) for m in mangas]
         if all_chapters:
             import statistics
-            print(f"\n=== 📖 Chapters ===")
+            print(f"\n=== Chapters ===")
             print(f"Total Chapters    : {sum(all_chapters)}")
             print(f"Average per Manga : {statistics.mean(all_chapters):.1f}")
             print(f"Max Chapters      : {max(all_chapters)}")
@@ -83,7 +83,7 @@ def main():
         # Try to map source IDs to names if available in backupSources
         source_names = {s.sourceId: s.name for s in sources}
         
-        print(f"\n=== 🔗 Sources Used ===")
+        print(f"\n=== Sources Used ===")
         for source_id, count in source_counts.most_common():
             name = source_names.get(source_id, f"ID: {source_id}")
             print(f"  - {name:<20} : {count} manga")
@@ -92,7 +92,7 @@ def main():
         all_genres = [g for m in mangas for g in getattr(m, 'genre', [])]
         if all_genres:
              top_genres = Counter(all_genres).most_common(5)
-             print(f"\n=== 🏷️  Top Genres ===")
+             print(f"\n=== Top Genres ===")
              for g, c in top_genres:
                  print(f"  - {g:<20} : {c}")
         
